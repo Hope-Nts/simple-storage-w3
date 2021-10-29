@@ -2,7 +2,8 @@ from solcx import compile_standard, install_solc
 import json
 from web3 import Web3
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 
 #reading the simplestorage file so that the compiler knows what to load
 with open("./SimpleStorage.sol", "r") as file:
@@ -57,17 +58,19 @@ bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"
 abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 #connecting to ganache
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
-chain_id = 1337
+network_id = os.getenv( "NETWORK_ID")
+w3 = Web3(Web3.HTTPProvider(network_id))
+chain_id = 4 #from chainid.network
 # chain_id = 5777esdae
 
 # w3 = Web3(Web3.HTTPProvider("http://0.0.0.0:8545"))
 
 
 #we get this from ganache any of the random generated addresses
-my_address = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
+my_address = "0x6003Ce38C76A15390663DbD13D5b357ec5f2dE64"
 # when ever we add a private key to python we're going to need to add the 0x because it need hex value
 private_key = os.getenv( "PRIVATE_KEY")
+
 
 # Creating the contract in python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
