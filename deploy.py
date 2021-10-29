@@ -132,3 +132,4 @@ transaction_reciept = w3.eth.wait_for_transaction_receipt(send_store_txn)
 #printing the newly deployed value
 print("Updated")
 print(simple_storage.functions.retrieve().call())
+print(simple_storage.functions.retrieve().call())
